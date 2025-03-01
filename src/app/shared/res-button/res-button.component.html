@@ -1,0 +1,24 @@
+<button
+  [type]="type"
+  [class]="buttonClasses"
+  [disabled]="disabled || loading"
+  (click)="onClick($event)"
+>
+  <!-- Loading Spinner -->
+  <span *ngIf="loading" class="spinner"></span>
+
+  <!-- Left Icon -->
+  <span *ngIf="iconLeft && !loading" class="button-icon button-icon-left">
+    {{ iconLeft }}
+  </span>
+
+  <!-- Button Content -->
+  <span class="button-content" [class.with-icon]="iconLeft || iconRight">
+    <ng-content></ng-content>
+  </span>
+
+  <!-- Right Icon -->
+  <span *ngIf="iconRight && !loading" class="button-icon button-icon-right">
+    {{ iconRight }}
+  </span>
+</button>

@@ -1,0 +1,5 @@
+npm run g:c shared/components/**
+npm run g:c features/**
+npm run g:s core/services/ServiceName/**
+npm run g:m core/modules/ModuleName/**
+npm run g:g core/guards/GuardName/**

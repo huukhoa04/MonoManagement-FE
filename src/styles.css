@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    /* Colors */
+    --primary-color: #ff00ff; /* Neon Pink */
+    --secondary-color: #39ff14; /* Neon Green */
+    --success-color: #00ff9f; /* Mint Green */
+    --danger-color: #ff3180; /* Hot Pink */
+    --warning-color: #d1ff36; /* Lime Green */
+    --info-color: #f0abff; /* Light Pink */
+    --light-color: #f8fff0; /* Light Minty White */
+    --dark-color: #121212; /* Dark Gray */
+    --neon-pink-glow: 0 0 10px rgba(255, 0, 255, 0.7); /* Pink glow effect */
+    --neon-green-glow: 0 0 10px rgba(57, 255, 20, 0.7); /* Green glow effect */
+    
+    /* Typography */
+    --font-family-base: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-size-base: 1rem;
+    --line-height-base: 1.5;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 3rem;
+    
+    /* Border */
+    --border-radius: 0.25rem;
+    --border-width: 1px;
+    --border-color: #dee2e6;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family-base);
+}
+body{
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    padding: var(--spacing-md);
+}

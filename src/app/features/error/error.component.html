@@ -1,0 +1,20 @@
+<div class="error-container">
+  <div class="error-content">
+    <div class="error-code">{{ errorCode }}</div>
+
+    <div class="error-glitch-container">
+      <div class="error-title">{{ errorMessage }}</div>
+      <div class="glitch-effect"></div>
+    </div>
+
+    <div class="error-message">
+      <p>{{ errorDetails }}</p>
+    </div>
+
+    <div class="error-actions">
+      <button class="neon-button primary" (click)="goToHome()">
+        Return Home
+      </button>
+    </div>
+  </div>
+</div>

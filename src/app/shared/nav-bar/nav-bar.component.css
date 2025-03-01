@@ -1,0 +1,307 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(18, 18, 18, 0.9);
+    padding: var(--spacing-md) var(--spacing-xl);
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--secondary-color);
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .navbar-logo a {
+    color: var(--light-color);
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 2px;
+    text-shadow: var(--neon-blue-glow);
+  }
+  
+  .navbar-logo .highlight {
+    color: var(--primary-color);
+    text-shadow: var(--neon-pink-glow);
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: var(--spacing-lg);
+  }
+  
+  .nav-link {
+    color: var(--light-color);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .nav-link:hover {
+    color: var(--secondary-color);
+    text-shadow: var(--neon-blue-glow);
+  }
+  
+  .nav-link.active {
+    color: var(--primary-color);
+    text-shadow: var(--neon-pink-glow);
+  }
+  
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    box-shadow: var(--neon-pink-glow);
+  }
+  
+  .navbar-user {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Hide the mobile login button by default */
+  .mobile-login {
+    display: none;
+    width: 100%;
+    padding: var(--spacing-md);
+    border-top: 1px solid rgba(57, 255, 20, 0.2);
+    margin-top: var(--spacing-sm);
+  }
+  
+  .neon-button.login {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--neon-pink-glow);
+  }
+  
+  .neon-button.login:hover {
+    background-color: var(--primary-color);
+    color: var(--dark-color);
+    box-shadow: 0 0 15px var(--primary-color);
+  }
+  
+  /* Mobile login button specific styles */
+  .mobile-login .neon-button.login {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: 1rem;
+  }
+  
+  /* Mobile menu toggle */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    position: relative;
+  }
+  
+  .mobile-menu-toggle span, 
+  .mobile-menu-toggle span::before, 
+  .mobile-menu-toggle span::after {
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: var(--secondary-color);
+    box-shadow: var(--neon-blue-glow);
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-menu-toggle span {
+    top: 14px;
+  }
+  
+  .mobile-menu-toggle span::before {
+    content: '';
+    top: -8px;
+  }
+  
+  .mobile-menu-toggle span::after {
+    content: '';
+    top: 8px;
+  }
+  
+  .mobile-menu-toggle span.open {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  
+  .mobile-menu-toggle span.open::before {
+    transform: rotate(45deg) translate(5px, 5px);
+    background-color: var(--primary-color);
+    box-shadow: var(--neon-pink-glow);
+  }
+  
+  .mobile-menu-toggle span.open::after {
+    transform: rotate(-45deg) translate(5px, -5px);
+    background-color: var(--primary-color);
+    box-shadow: var(--neon-pink-glow);
+  }
+  
+  /* Desktop large screens */
+  @media (min-width: 1441px) {
+    .navbar-container {
+      padding: 0 var(--spacing-lg);
+    }
+    
+    .nav-link {
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* Laptops and desktops */
+  @media (max-width: 1200px) {
+    .navbar {
+      padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .navbar-logo a {
+      font-size: 1.6rem;
+    }
+    
+    .navbar-links {
+      gap: var(--spacing-md);
+    }
+  }
+  
+  /* Tablets and small laptops */
+  @media (max-width: 992px) {
+    .navbar {
+      padding: var(--spacing-sm) var(--spacing-lg);
+    }
+    
+    .navbar-logo a {
+      font-size: 1.4rem;
+    }
+    
+    .nav-link {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Mobile devices */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .navbar-links {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background-color: rgba(18, 18, 18, 0.95);
+      backdrop-filter: blur(15px);
+      flex-direction: column;
+      gap: 0;
+      height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      z-index: 1000;
+      border-bottom: 1px solid var(--secondary-color);
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .navbar-links.active {
+      height: auto;
+      max-height: 80vh; /* Prevents overflow on small screens */
+      opacity: 1;
+      visibility: visible;
+      box-shadow: var(--neon-blue-glow);
+      overflow-y: auto; /* Allows scrolling if menu is too long */
+    }
+    
+    .nav-link {
+      padding: var(--spacing-md);
+      text-align: center;
+      width: 100%;
+      border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+    }
+    
+    .nav-link:last-child {
+      border-bottom: none;
+    }
+    
+    .nav-link.active::after {
+      display: none;
+    }
+    
+    .mobile-menu-toggle {
+      display: block;
+    }
+    
+    .navbar-logo a {
+      font-size: 1.3rem;
+    }
+    
+    /* Show mobile login, hide desktop login */
+    .mobile-login {
+      display: block;
+    }
+    
+    .navbar-user {
+      display: none;
+    }
+  }
+  
+  /* Small mobile devices */
+  @media (max-width: 480px) {
+    .navbar {
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .navbar-logo a {
+      font-size: 1.1rem;
+    }
+    
+    .mobile-login .neon-button.login {
+      padding: var(--spacing-md) var(--spacing-sm);
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Extra small devices */
+  @media (max-width: 350px) {
+    .navbar-logo a {
+      font-size: 0.95rem;
+    }
+    
+    .mobile-menu-toggle {
+      width: 25px;
+      height: 25px;
+    }
+    
+    .mobile-menu-toggle span, 
+    .mobile-menu-toggle span::before, 
+    .mobile-menu-toggle span::after {
+      width: 25px;
+    }
+  }
