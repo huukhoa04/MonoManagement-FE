@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/home/home.component';
-import { ErrorComponent } from './features/error/error.component';
 
 export const routes: Routes = [
     {
@@ -12,13 +10,23 @@ export const routes: Routes = [
     },
     {
         path: 'error',
-        component: ErrorComponent,
+        loadComponent: () => import('./features/error/error.component').then(m => m.ErrorComponent),
         title: 'Error - MonoManagement'
     },
     {
         path: 'playground',
         loadComponent: () => import('./features/playground/playground.component').then(m => m.PlaygroundComponent),
         title: 'Component Playground - MonoManagement'
+    },
+    {
+        path: 'login',
+        loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent),
+        title: 'Login - MonoManagement'
+    },
+    {
+        path: 'signup',
+        loadComponent: () => import('./features/signup/signup.component').then(m => m.SignupComponent),
+        title: 'Sign Up - MonoManagement'
     },
     { 
         path: '**', 

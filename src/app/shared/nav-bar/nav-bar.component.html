@@ -26,15 +26,55 @@
       <a routerLink="/settings" routerLinkActive="active" class="nav-link"
         >Settings</a
       >
-      <!-- Login button for mobile view -->
-      <div class="mobile-login">
-        <button class="neon-button login">Login</button>
+      
+      <!-- Auth buttons for mobile view -->
+      <div class="mobile-auth">
+        <ng-container *ngIf="!isLoggedIn">
+          <button class="neon-button login" (click)="login()">Login</button>
+          <button class="neon-button signup" (click)="signup()">Sign Up</button>
+        </ng-container>
+        <ng-container *ngIf="isLoggedIn">
+          <div class="mobile-user-info">
+            <div class="user-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+            <div class="user-name">{{ userName }}</div>
+          </div>
+          <button class="neon-button logout" (click)="logout()">Logout</button>
+        </ng-container>
       </div>
     </div>
 
     <!-- User Menu - Desktop only -->
     <div class="navbar-user">
-      <button class="neon-button login">Login</button>
+      <!-- Not logged in state -->
+      <ng-container *ngIf="!isLoggedIn">
+        <button class="neon-button signup" (click)="signup()">Sign Up</button>
+        <button class="neon-button login" (click)="login()">Login</button>
+      </ng-container>
+      
+      <!-- Logged in state -->
+      <div *ngIf="isLoggedIn" class="user-dropdown">
+        <div class="user-info" (click)="toggleUserDropdown()">
+          <div class="user-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+          <div class="user-name">{{ userName }}</div>
+          <div class="dropdown-arrow" [class.open]="userDropdownOpen">▼</div>
+        </div>
+        
+        <div class="dropdown-menu" [class.active]="userDropdownOpen">
+          <a routerLink="/profile" class="dropdown-item">
+            <span class="dropdown-icon">👤</span>
+            <span>Profile</span>
+          </a>
+          <a routerLink="/settings" class="dropdown-item">
+            <span class="dropdown-icon">⚙️</span>
+            <span>Settings</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a (click)="logout()" class="dropdown-item logout">
+            <span class="dropdown-icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- Mobile Menu Toggle -->
