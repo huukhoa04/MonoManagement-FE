@@ -26,19 +26,27 @@
       <a routerLink="/settings" routerLinkActive="active" class="nav-link"
         >Settings</a
       >
-      
+
       <!-- Auth buttons for mobile view -->
       <div class="mobile-auth">
         <ng-container *ngIf="!isLoggedIn">
-          <button class="neon-button login" (click)="login()">Login</button>
-          <button class="neon-button signup" (click)="signup()">Sign Up</button>
+          <app-res-button variant="primary" (buttonClick)="login()"
+            >Login</app-res-button
+          >
+          <app-res-button variant="success" (buttonClick)="signup()"
+            >Sign Up</app-res-button
+          >
         </ng-container>
         <ng-container *ngIf="isLoggedIn">
           <div class="mobile-user-info">
-            <div class="user-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+            <div class="user-avatar">
+              {{ userName.charAt(0).toUpperCase() }}
+            </div>
             <div class="user-name">{{ userName }}</div>
           </div>
-          <button class="neon-button logout" (click)="logout()">Logout</button>
+          <app-res-button variant="danger" (buttonClick)="logout()"
+            >Logout</app-res-button
+          >
         </ng-container>
       </div>
     </div>
@@ -47,18 +55,22 @@
     <div class="navbar-user">
       <!-- Not logged in state -->
       <ng-container *ngIf="!isLoggedIn">
-        <button class="neon-button signup" (click)="signup()">Sign Up</button>
-        <button class="neon-button login" (click)="login()">Login</button>
+        <app-res-button variant="success" size="sm" (buttonClick)="signup()"
+          >Sign Up</app-res-button
+        >
+        <app-res-button variant="primary" size="sm" (buttonClick)="login()"
+          >Login</app-res-button
+        >
       </ng-container>
-      
+
       <!-- Logged in state -->
       <div *ngIf="isLoggedIn" class="user-dropdown">
         <div class="user-info" (click)="toggleUserDropdown()">
-          <div class="user-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+          <img src="{{ avatar }}" alt="avatar" class="user-avatar" />
           <div class="user-name">{{ userName }}</div>
           <div class="dropdown-arrow" [class.open]="userDropdownOpen">▼</div>
         </div>
-        
+
         <div class="dropdown-menu" [class.active]="userDropdownOpen">
           <a routerLink="/profile" class="dropdown-item">
             <span class="dropdown-icon">👤</span>

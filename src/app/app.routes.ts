@@ -1,32 +1,61 @@
 import { Routes } from '@angular/router';
+import { AuthLayoutComponent } from './shared/layout/auth-layout/auth-layout.component';
+import { MainLayoutComponent } from './shared/layout/main-layout/main-layout.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-    {
-        path: '',
-        loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent),
-        data: {
-            title: 'Home'
-        }
-    },
-    {
-        path: 'error',
-        loadComponent: () => import('./features/error/error.component').then(m => m.ErrorComponent),
-        title: 'Error - MonoManagement'
-    },
-    {
-        path: 'playground',
-        loadComponent: () => import('./features/playground/playground.component').then(m => m.PlaygroundComponent),
-        title: 'Component Playground - MonoManagement'
-    },
+    
     {
         path: 'login',
-        loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent),
-        title: 'Login - MonoManagement'
+        component: AuthLayoutComponent,
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent),
+                title: 'Login - MonoManagement'
+            }
+        ]
     },
     {
         path: 'signup',
-        loadComponent: () => import('./features/signup/signup.component').then(m => m.SignupComponent),
-        title: 'Sign Up - MonoManagement'
+        component: AuthLayoutComponent,
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./features/signup/signup.component').then(m => m.SignupComponent),
+                title: 'Sign Up - MonoManagement'
+            }
+        ]
+    },
+    {
+        path: 'error',
+        component: AuthLayoutComponent,
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./features/error/error.component').then(m => m.ErrorComponent),
+                title: 'Error - MonoManagement'
+            }
+        ]
+    },
+        
+    {
+        path: '',
+        component: MainLayoutComponent,
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent),
+                data: {
+                    title: 'Home'
+                }
+            },
+            {
+                path: 'playground',
+                loadComponent: () => import('./features/playground/playground.component').then(m => m.PlaygroundComponent),
+                title: 'Component Playground - MonoManagement',
+            },
+        ]
     },
     { 
         path: '**', 

@@ -4,6 +4,8 @@ import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../core/services/auth.service';
 import { ResButtonComponent } from '../res-button/res-button.component';
+import { UserService } from '../../core/services/user.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-nav-bar',
@@ -16,11 +18,13 @@ export class NavBarComponent implements OnInit {
   isMenuOpen = false;
   isLoggedIn = false;
   userName = '';
+  avatar = '';
   userDropdownOpen = false;
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {
     // Close mobile menu when route changes
     this.router.events.pipe(
@@ -65,10 +69,11 @@ export class NavBarComponent implements OnInit {
   private checkAuthStatus(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
     if (this.isLoggedIn) {
-      const user = this.authService.getCurrentUser();
-      if (user) {
-        this.userName = user.username || user.email || 'User';
-      }
+      this.userService.me().subscribe(user => {
+        this.userName = user.username;
+        this.avatar = (environment.baseUrl + user.avatar?.formats.small.url) || '';
+        console.log('User:', user);
+      });
     }
   }
 }

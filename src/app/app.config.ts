@@ -1,23 +1,17 @@
-import { ApplicationConfig, ErrorHandler } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
-import { GlobalErrorHandlerService } from './core/services/error-handler.service';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpEvent, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { authInterceptorFn } from './core/interceptors/auth.interceptor';
+
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(
-      routes,
-      withComponentInputBinding(),
-      withViewTransitions()
-    ),
+    provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(
-      // Add any HTTP interceptors here if needed
-      // withInterceptors([authInterceptor])
-    ),
-    { 
-      provide: ErrorHandler, 
-      useClass: GlobalErrorHandlerService 
-    }
+      withInterceptors([authInterceptorFn])
+    )
   ]
 };
