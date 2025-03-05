@@ -17,7 +17,7 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/me?populate=avatar`)
     .pipe(map((response: any) => response as User));
   }
-  
+
   fetchByPage(page: number, limit: number) {
     return this.http.get(`${this.apiUrl}?_page=${page}&_limit=${limit}&populate=avatar`)
     .pipe(map((response: any) => response as User[]));
@@ -29,16 +29,8 @@ export class UserService {
   }
 
   update(user: User) {
-    try {
-      if (this.authService.getCurrentUser().id !== user.id) {
-        throw new Error('Unauthorized: Ngu lam em oi');
-      }
-      return this.http.put(`${this.apiUrl}/${user.id}`, user)
-      .pipe(map((response: any) => response as User));
-    } catch (error) {
-      // This will be caught by the global error handler
-      throw error;
-    }
+    return this.http.put(`${this.apiUrl}/${user.id}`, user)
+    .pipe(map((response: any) => response as User));
   }
-
+  
 }

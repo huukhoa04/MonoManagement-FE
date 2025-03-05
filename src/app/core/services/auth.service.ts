@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   // Get current user from storage
-  getCurrentUser(): any {
+  getCurrentUser(): User {
     const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
   }

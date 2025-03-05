@@ -6,24 +6,22 @@ import { ResButtonComponent } from '../../shared/res-button/res-button.component
   selector: 'app-playground',
   standalone: true,
   imports: [CommonModule, ResButtonComponent],
-  templateUrl: './playground.component.html',
-  styleUrl: './playground.component.css',
+  template: `
+    <div class="playground">
+      <h1>Playground</h1>
+      <app-res-button></app-res-button>
+    </div>
+  `,
+  styles: [`
+    .playground {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+  `]
 })
 export class PlaygroundComponent {
-  isLoading = false;
-
-  someFunction() {
-    console.log('Button clicked!');
-  }
-
-  toggleLoading() {
-    this.isLoading = !this.isLoading;
-    
-    // Auto reset after 2 seconds
-    if (this.isLoading) {
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 2000);
-    }
-  }
+  
 }

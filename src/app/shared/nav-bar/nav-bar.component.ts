@@ -71,7 +71,7 @@ export class NavBarComponent implements OnInit {
     if (this.isLoggedIn) {
       this.userService.me().subscribe(user => {
         this.userName = user.username;
-        this.avatar = (environment.baseUrl + user.avatar?.formats.small.url) || '';
+        this.avatar = (environment.baseUrl + user.avatar?.formats['small'].url) || '';
         console.log('User:', user);
       });
     }

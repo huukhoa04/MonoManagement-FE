@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MarkdownModule } from 'ngx-markdown';
 
 // Add other components as needed
 
@@ -20,6 +21,7 @@ const providers: any = [
     SharedModule,
     HttpClientModule, // For HTTP requests
     ReactiveFormsModule,
+    MarkdownModule.forRoot()
   ],
   exports: [
     CommonModule,

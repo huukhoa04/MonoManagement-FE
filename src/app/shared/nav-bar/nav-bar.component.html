@@ -39,9 +39,7 @@
         </ng-container>
         <ng-container *ngIf="isLoggedIn">
           <div class="mobile-user-info">
-            <div class="user-avatar">
-              {{ userName.charAt(0).toUpperCase() }}
-            </div>
+            <img src="{{ avatar }}" alt="avatar" class="user-avatar" />
             <div class="user-name">{{ userName }}</div>
           </div>
           <app-res-button variant="danger" (buttonClick)="logout()"

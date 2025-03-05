@@ -1,0 +1,124 @@
+<div class="post-form-container">
+  <header class="form-header">
+    <h1>{{ pageTitle }}</h1>
+    <p class="subtitle">Share your thoughts with the world</p>
+  </header>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <div class="error-icon">⚠️</div>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading post data...</p>
+  </div>
+
+  <form
+    [formGroup]="postForm"
+    (ngSubmit)="onSubmit()"
+    class="post-form"
+    *ngIf="!isLoading"
+  >
+    <!-- Content textarea -->
+    <div class="form-group">
+      <label for="content" class="form-label">What's on your mind?</label>
+      <div
+        class="textarea-container"
+        [class.invalid]="
+          postForm.get('content')?.invalid && postForm.get('content')?.touched
+        "
+      >
+        <textarea
+          formControlName="content"
+          id="content"
+          placeholder="Share your thoughts, ideas, or questions..."
+          rows="5"
+          class="neon-input content-input"
+        ></textarea>
+      </div>
+      <div
+        class="character-count"
+        [class.error]="postForm.get('content')?.value?.length > 500"
+      >
+        {{ postForm.get("content")?.value?.length || 0 }}/500
+      </div>
+      <div
+        class="form-error"
+        *ngIf="
+          postForm.get('content')?.invalid && postForm.get('content')?.touched
+        "
+      >
+        <ng-container *ngIf="postForm.get('content')?.errors?.['required']"
+          >Content is required</ng-container
+        >
+        <ng-container *ngIf="postForm.get('content')?.errors?.['minlength']"
+          >Content must be at least 2 characters</ng-container
+        >
+        <ng-container *ngIf="postForm.get('content')?.errors?.['maxlength']"
+          >Content cannot exceed 500 characters</ng-container
+        >
+      </div>
+    </div>
+
+    <!-- Media upload -->
+    <div class="form-group">
+      <label class="form-label">Add Photos</label>
+      <div class="media-upload-container">
+        <label for="media-upload" class="media-upload-button">
+          <span class="upload-icon">📷</span>
+          <span>Add Photos</span>
+        </label>
+        <input
+          type="file"
+          id="media-upload"
+          accept="image/*"
+          multiple
+          (change)="onFileSelected($event)"
+          class="hidden-input"
+        />
+        <span class="media-limit-text"
+          >{{ mediaList.length }}/4 images (5MB max per image)</span
+        >
+      </div>
+
+      <!-- Media previews -->
+      <div class="media-preview-grid" *ngIf="previewUrls.length > 0">
+        <div
+          class="media-preview-item"
+          *ngFor="let url of previewUrls; let i = index"
+        >
+          <img [src]="url" alt="Preview" class="media-preview-image" />
+          <button
+            type="button"
+            class="remove-media-button"
+            (click)="removeMedia(i)"
+          >
+            ✖
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form actions -->
+    <div class="form-actions">
+      <app-res-button
+        type="button"
+        variant="secondary"
+        (buttonClick)="cancelEdit()"
+        [disabled]="isSubmitting"
+      >
+        Cancel
+      </app-res-button>
+
+      <app-res-button
+        type="submit"
+        variant="primary"
+        [loading]="isSubmitting"
+        [disabled]="postForm.invalid || isSubmitting"
+      >
+        {{ submitButtonText }}
+      </app-res-button>
+    </div>
+  </form>
+</div>
