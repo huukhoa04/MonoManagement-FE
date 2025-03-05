@@ -1,0 +1,104 @@
+.comment-form {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .form-group {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .textarea-container {
+    position: relative;
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    background-color: rgba(18, 18, 18, 0.9);
+    transition: all 0.3s ease;
+  }
+  
+  .textarea-container:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: var(--neon-pink-glow);
+  }
+  
+  .textarea-container.is-invalid {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 10px rgba(255, 49, 128, 0.7);
+  }
+  
+  .comment-textarea {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: var(--spacing-sm);
+    color: var(--light-color);
+    font-family: var(--font-family-base);
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .comment-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .textarea-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 var(--spacing-sm) var(--spacing-sm);
+  }
+  
+  .char-counter {
+    font-size: 0.8rem;
+    color: var(--light-color);
+    opacity: 0.7;
+  }
+  
+  .char-counter.error {
+    color: var(--danger-color);
+    opacity: 1;
+  }
+  
+  .error-message {
+    font-size: 0.8rem;
+    color: var(--danger-color);
+    margin-top: var(--spacing-xs);
+    padding-left: var(--spacing-sm);
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+  }
+  
+  /* Reply form styles */
+  :host-context(.reply-form) .comment-form {
+    margin-left: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    border-left: 2px solid rgba(57, 255, 20, 0.3);
+    padding-left: var(--spacing-sm);
+  }
+  
+  :host-context(.reply-form) .textarea-container {
+    background-color: rgba(18, 18, 18, 0.95);
+  }
+  
+  :host-context(.reply-form) .comment-textarea {
+    min-height: 60px;
+  }
+  
+  /* For mobile screens */
+  @media (max-width: 768px) {
+    .form-actions {
+      flex-direction: column;
+    }
+    
+    .form-actions app-res-button {
+      width: 100%;
+    }
+    
+    :host-context(.reply-form) .comment-form {
+      margin-left: var(--spacing-md);
+    }
+  }

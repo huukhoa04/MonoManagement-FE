@@ -1,1 +1,59 @@
-<p>comment-form works!</p>
+<form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comment-form">
+  <div class="form-group">
+    <div class="textarea-container" [class.is-invalid]="hasError">
+      <textarea
+        formControlName="content"
+        class="comment-textarea"
+        [placeholder]="placeholder"
+        rows="3"
+        [attr.maxlength]="maxLength"
+        (input)="contentControl?.markAsDirty()"
+      ></textarea>
+
+      <div class="textarea-footer">
+        <div class="char-counter" [class.error]="remainingChars < 10">
+          {{ remainingChars }} characters left
+        </div>
+      </div>
+    </div>
+
+    <!-- Error messages -->
+    <div *ngIf="hasError || errorMessage" class="error-message">
+      <ng-container *ngIf="contentControl?.errors?.['required']">
+        Comment cannot be empty.
+      </ng-container>
+      <ng-container *ngIf="contentControl?.errors?.['minlength']">
+        Comment must be at least {{ minLength }} characters.
+      </ng-container>
+      <ng-container *ngIf="contentControl?.errors?.['maxlength']">
+        Comment cannot exceed {{ maxLength }} characters.
+      </ng-container>
+      <ng-container *ngIf="errorMessage">
+        {{ errorMessage }}
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <app-res-button
+      *ngIf="cancelable"
+      type="button"
+      variant="secondary"
+      size="sm"
+      (buttonClick)="onCancel()"
+      class="cancel-button"
+    >
+      Cancel
+    </app-res-button>
+
+    <app-res-button
+      type="submit"
+      variant="primary"
+      size="sm"
+      [disabled]="commentForm.invalid || isSubmitting"
+      [loading]="loading || isSubmitting"
+    >
+      {{ buttonText }}
+    </app-res-button>
+  </div>
+</form>

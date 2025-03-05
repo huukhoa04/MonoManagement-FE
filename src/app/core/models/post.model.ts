@@ -1,4 +1,4 @@
-import { Media, PaginationMeta } from "./strapi-media.model";
+import { Media, PaginationMeta } from "./strapi-type.model";
 import { User } from "./user.model";
 import { Comment } from "./comment.model";
 export interface Post {

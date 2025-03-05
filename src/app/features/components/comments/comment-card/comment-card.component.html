@@ -1,1 +1,119 @@
-<p>comment-card works!</p>
+<div class="comment-card" [class.nested-comment]="level > 0">
+  <div class="comment-header">
+    <div class="avatar">
+      <ng-container *ngIf="comment.from_user?.avatar; else noAvatar">
+        <img [src]="comment.from_user.avatar" alt="User avatar" class="avatar-img" />
+      </ng-container>
+      <ng-template #noAvatar>
+        <div class="avatar-placeholder">
+          {{ getInitials(comment.from_user.username || "Anonymous") }}
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="user-info">
+      <div class="username">{{ comment.from_user.username || "Anonymous" }}</div>
+      <div class="timestamp">{{ formatDate(comment.createdAt) }}</div>
+    </div>
+  </div>
+
+  <div class="comment-content">
+    <markdown [data]="comment.content" class="comment-text"></markdown>
+  </div>
+
+  <div class="comment-actions">
+    <!-- Upvote Button -->
+    <app-res-button
+      variant="secondary"
+      size="sm"
+      [iconLeft]="'⬆️'"
+      (buttonClick)="onUpvoteClick()"
+      class="action-button upvote-button"
+    >
+    {{comment.upvote ? comment.upvote.toString() : ''}}
+    </app-res-button>
+
+    <!-- Reply Button -->
+    <app-res-button
+      variant="secondary"
+      size="sm"
+      [iconLeft]="'↩️'"
+      (buttonClick)="onReplyClick()"
+      class="action-button reply-button"
+    >
+    Reply
+    </app-res-button>
+
+    <!-- Delete Button (only for author) -->
+    <app-res-button
+      *ngIf="isAuthor"
+      variant="danger"
+      size="sm"
+      [iconLeft]="'🗑️'"
+      label="Delete"
+      (buttonClick)="onDeleteClick()"
+      class="action-button delete-button"
+    >
+    </app-res-button>
+  </div>
+
+  <!-- Reply form when replying to this comment -->
+  <div *ngIf="isReplying" class="reply-form-container">
+    <app-comment-form
+      class="reply-form"
+      [postId]="postId"
+      [parentId]="comment.id"
+      placeholder="Write a reply..."
+      buttonText="Reply"
+      [cancelable]="true"
+      [autoFocus]="true"
+      (submitComment)="onReplySubmit($event)"
+      (cancelReply)="onCancelReply()"
+    >
+    </app-comment-form>
+  </div>
+
+  <!-- Nested replies -->
+  <div *ngIf="hasReplies" class="replies-container">
+    <div class="replies-header" (click)="toggleReplies()">
+      <span class="toggle-icon">{{ showReplies ? "▼" : "►" }}</span>
+      <span class="replies-count">
+        {{ replyCount }} {{ replyCount === 1 ? "reply" : "replies" }}
+      </span>
+    </div>
+
+    <div class="replies-list" *ngIf="showReplies">
+      <ng-container *ngIf="showNestedReplies; else viewMoreLink">
+        <app-comment-card
+            *ngFor="let commentReply of comment.replies"
+            [comment]="commentReply"
+          [postId]="postId"
+          [currentUserId]="currentUserId"
+          [level]="level + 1"
+          [maxLevel]="maxLevel"
+          (upvote)="upvote.emit($event)"
+          (reply)="onReplyReceived($event)"
+          (cancelReply)="cancelReply.emit($event)"
+          (submitReply)="submitReply.emit($event)"
+          (deleteComment)="deleteComment.emit($event)"
+        >
+        </app-comment-card>
+      </ng-container>
+
+      <ng-template #viewMoreLink>
+        <div class="view-more-replies">
+          <app-res-button
+            variant="primary"
+            [routerLink]="['/posts', postId]"
+            [fragment]="'comment-' + comment.id"
+            [iconRight]="'➡️'"
+            class="view-more-button"
+          >
+            View {{ replyCount }} more
+            {{ replyCount === 1 ? "reply" : "replies" }}
+          </app-res-button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

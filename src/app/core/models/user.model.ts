@@ -1,5 +1,5 @@
 import { Post } from "./post.model";
-import { Media } from "./strapi-media.model";
+import { Media } from "./strapi-type.model";
 import { Comment } from "./comment.model";
 export interface User {
     id?: number;

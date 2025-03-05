@@ -7,7 +7,7 @@ import { ResButtonComponent } from '../../../../shared/res-button/res-button.com
 import { finalize, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
-import { Media } from '../../../../core/models/strapi-media.model';
+import { Media } from '../../../../core/models/strapi-type.model';
 import { environment } from '../../../../environments/environment';
 
 @Component({

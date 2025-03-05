@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Media, PaginationMeta, PaginationParams } from '../models/strapi-media.model';
+import { Media, PaginationMeta, PaginationParams } from '../models/strapi-type.model';
 
 
 

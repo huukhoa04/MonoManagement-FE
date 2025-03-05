@@ -47,3 +47,5 @@ export interface PaginationMeta {
         total: number;
     };
 }
+
+export type Identifier = string | number;

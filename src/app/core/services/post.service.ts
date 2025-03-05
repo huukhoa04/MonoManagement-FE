@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Post, PostResponse, PostsResponse, CreatePostDto } from '../models/post.model';
 import { Observable } from 'rxjs';
+import { Identifier } from '../models/strapi-type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class PostService {
   }
   
   // Get a specific post by ID
-  getPostById(id: number): Observable<PostResponse> {
+  getPostById(id: Identifier): Observable<PostResponse> {
     return this.http.get<PostResponse>(`${this.apiUrl}/${id}?populate=poster`);
   }
 
@@ -37,17 +38,17 @@ export class PostService {
   }
 
   // Update an existing post
-  updatePost(id: number, postData: Partial<{ content: string, medias?: string[] }>): Observable<PostResponse> {
+  updatePost(id: Identifier, postData: Partial<{ content: string, medias?: string[] }>): Observable<PostResponse> {
     return this.http.put<PostResponse>(`${this.apiUrl}/${id}`, { data: postData });
   }
 
   // Delete a post
-  deletePost(id: number): Observable<PostResponse> {
+  deletePost(id: Identifier): Observable<PostResponse> {
     return this.http.delete<PostResponse>(`${this.apiUrl}/${id}`);
   }
 
   // Upvote a post
-  upvotePost(id: number): Observable<PostResponse> {
+  upvotePost(id: Identifier): Observable<PostResponse> {
     return this.http.put<PostResponse>(`${this.apiUrl}/${id}`, { 
       data: { upvote: { increment: 1 } } 
     });
@@ -59,5 +60,4 @@ export class PostService {
       `${this.apiUrl}?filters[content][$containsi]=${query}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=poster`
     );
   }
-
 }

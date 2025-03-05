@@ -1,5 +1,5 @@
 import { Post } from "./post.model";
-import { Media } from "./strapi-media.model";
+import { Identifier, Media } from "./strapi-type.model";
 import { User } from "./user.model";
 
 export interface Comment{
@@ -13,6 +13,8 @@ export interface Comment{
     publishedAt: string;
     from_user: User;
     from_post: Post;
+    parent?: Comment;
+    replies?: Comment[];
 }
 
 export interface CommentResponse {
@@ -35,7 +37,16 @@ export interface CommentsResponse {
 export interface CreateCommentDto {
     data: {
         content: string;
-        from_post: string;
-        from_user: string;
+        from_post: Identifier;
+        from_user: Identifier;
     };
+}
+
+export interface CreateReplyDto {
+    data: {
+        content: string;
+        from_post: Identifier;
+        from_user: Identifier;
+        parent: Identifier;
+    }
 }

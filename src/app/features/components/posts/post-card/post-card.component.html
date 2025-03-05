@@ -1,1 +1,75 @@
-<p>post-card works!</p>
+<article class="post-card" [routerLink]="['/posts', post.id]">
+  <!-- Author info -->
+  <div class="post-header">
+    <div class="author-info">
+      <div class="author-avatar">
+        {{ getInitials() }}
+      </div>
+      <div class="author-details">
+        <h3 class="author-name">{{ post.poster.username }}</h3>
+        <p class="post-date">{{ formatDate(post.createdAt) }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post content -->
+  <div class="post-content">
+    <markdown
+      [data]="truncateContent(post.content)"
+      class="post-text"
+    ></markdown>
+  </div>
+
+  <!-- Post media (if any) -->
+  <div class="post-media" *ngIf="post.medias && post.medias.length > 0">
+    <div
+      class="media-grid"
+      [ngClass]="
+        'grid-' + (post.medias.length > 4 ? '4-plus' : post.medias.length)
+      "
+    >
+      <div
+        class="media-item"
+        *ngFor="let media of displayMedias; let i = index"
+        [ngClass]="{ 'media-more': i === 3 && hasMoreMedias }"
+      >
+        <img [src]="media.url" alt="Post image" class="media-img" />
+        <div class="more-overlay" *ngIf="i === 3 && hasMoreMedias">
+          +{{ additionalMediaCount }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post actions -->
+  <div class="post-actions">
+    <app-res-button
+      variant="secondary"
+      size="sm"
+      [iconLeft]="'⬆️'"
+      (buttonClick)="onUpvote($event)"
+      class="action-button upvote-button"
+    >
+      {{ post.upvote || 0 }}
+    </app-res-button>
+
+    <app-res-button
+      variant="secondary"
+      size="sm"
+      [iconLeft]="'💬'"
+      class="action-button"
+    >
+      {{ post.comments?.length || 0 }}
+    </app-res-button>
+
+    <app-res-button
+      variant="secondary"
+      size="sm"
+      [iconLeft]="'↗️'"
+      (buttonClick)="onShare($event)"
+      class="action-button"
+    >
+      Share
+    </app-res-button>
+  </div>
+</article>

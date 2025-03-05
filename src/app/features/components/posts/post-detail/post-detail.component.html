@@ -1,1 +1,162 @@
-<p>post-detail works!</p>
+<div class="post-detail-container">
+  <!-- Back button -->
+  <div class="back-navigation">
+    <app-res-button
+      variant="secondary"
+      size="sm"
+      [iconLeft]="'⬅️'"
+      (buttonClick)="goBack()"
+    >
+      Back to Posts
+    </app-res-button>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading post...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="errorMessage" class="error-message">
+    <div class="error-icon">⚠️</div>
+    <span>{{ errorMessage }}</span>
+    <app-res-button variant="secondary" size="sm" (buttonClick)="goBack()">
+      Back to Posts
+    </app-res-button>
+  </div>
+
+  <!-- Post content -->
+  <article *ngIf="post && !isLoading" class="post-content">
+    <!-- Post header -->
+    <header class="post-header">
+      <div class="post-author">
+        <div class="author-avatar">
+          <div class="avatar-placeholder">
+            {{ post.poster.username.charAt(0).toUpperCase() || "A" }}
+          </div>
+        </div>
+        <div class="author-info">
+          <h2 class="author-name">
+            {{ post.poster.username || "Anonymous" }}
+          </h2>
+          <p class="post-date">{{ formatDate(post.createdAt) }}</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Post body -->
+    <div class="post-body">
+      <markdown [data]="post.content" class="post-text"></markdown>
+    </div>
+
+    <!-- Post media -->
+    <div *ngIf="post.medias && post.medias.length > 0" class="post-media">
+      <div
+        class="media-gallery"
+        [ngClass]="
+          'grid-' + (post.medias.length > 4 ? '4-plus' : post.medias.length)
+        "
+      >
+        <div
+          *ngFor="let media of post.medias; let i = index"
+          class="media-item"
+          [ngClass]="{ 'media-more': i === 3 && post.medias.length > 4 }"
+        >
+          <img
+            [src]="media.url"
+            [alt]="media.alternativeText || 'Post image'"
+            class="media-img"
+          />
+          <div class="more-overlay" *ngIf="i === 3 && post.medias.length > 4">
+            +{{ post.medias.length - 4 }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post actions -->
+    <div class="post-actions">
+      <app-res-button
+        variant="secondary"
+        size="sm"
+        [iconLeft]="'⬆️'"
+        (buttonClick)="onUpvotePost()"
+        class="action-button upvote-button"
+      >
+        {{ post.upvote || 0 }}
+      </app-res-button>
+
+      <app-res-button
+        variant="secondary"
+        size="sm"
+        [iconLeft]="'💬'"
+        class="action-button comment-button"
+      >
+        {{ comments.length || 0 }}
+      </app-res-button>
+
+      <app-res-button
+        variant="secondary"
+        size="sm"
+        [iconLeft]="'↗️'"
+        (buttonClick)="onSharePost()"
+        class="action-button share-button"
+      >
+        Share
+      </app-res-button>
+    </div>
+  </article>
+
+  <!-- Comments section -->
+  <section *ngIf="post && !isLoading" class="comments-section">
+    <h3 class="section-title">
+      Comments <span class="comment-count">({{ comments.length || 0 }})</span>
+    </h3>
+
+    <!-- Comment form -->
+    <app-comment-form
+      [postId]="post.id"
+      [loading]="submittingComment"
+      placeholder="Join the discussion..."
+      buttonText="Post Comment"
+      (submitComment)="handleCommentSubmit($event)"
+    >
+    </app-comment-form>
+
+    <!-- Comments loading -->
+    <div *ngIf="isLoadingComments" class="loading-comments">
+      <div class="loading-spinner small"></div>
+      <p>Loading comments...</p>
+    </div>
+
+    <!-- No comments -->
+    <div
+      *ngIf="!isLoadingComments && (!comments || comments.length === 0)"
+      class="no-comments"
+    >
+      <p>No comments yet. Be the first to share your thoughts!</p>
+    </div>
+
+    <!-- Comments list -->
+    <div
+      *ngIf="!isLoadingComments && comments && comments.length > 0"
+      class="comments-list"
+    >
+      <app-comment-card
+        *ngFor="let comment of comments"
+        [comment]="comment"
+        [postId]="post.id"
+        [currentUserId]="currentUser?.id"
+        [isReplying]="replyingToCommentId === comment.id"
+        (upvote)="onUpvoteComment($event)"
+        (reply)="onReplyComment(comment.id)"
+        (cancelReply)="onCancelReply()"
+        (submitReply)="handleReplySubmit($event)"
+        (deleteComment)="onDeleteComment($event)"
+        [attr.id]="'comment-' + comment.id"
+      >
+      </app-comment-card>
+    </div>
+  </section>
+</div>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs';
 import { User } from '../models/user.model';
-import { AuthService } from './auth.service';
+import { Identifier } from '../models/strapi-type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 export class UserService {
   private apiUrl = `${environment.apiUrl}/users`;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
 
   me() {
     return this.http.get(`${this.apiUrl}/me?populate=avatar`)
@@ -23,7 +23,7 @@ export class UserService {
     .pipe(map((response: any) => response as User[]));
   }
 
-  fetchById(id: string) {
+  fetchById(id: Identifier) {
     return this.http.get(`${this.apiUrl}/${id}?populate=avatar`)
     .pipe(map((response: any) => response as User));
   }
